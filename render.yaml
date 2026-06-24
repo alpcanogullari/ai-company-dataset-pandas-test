@@ -4,6 +4,7 @@ services:
     env: python
     buildCommand: pip install -r requirements.txt && python -m aicoveragedata.app.dashboard
     startCommand: HOST=0.0.0.0 python -m aicoveragedata.app.dashboard_server
+    healthCheckPath: /health
     envVars:
       - key: OPENAI_API_KEY
         sync: false
