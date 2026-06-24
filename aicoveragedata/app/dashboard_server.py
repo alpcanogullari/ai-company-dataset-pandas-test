@@ -1,4 +1,5 @@
 import json
+import os
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 import sys
@@ -7,8 +8,8 @@ APP_DIR = Path(__file__).resolve().parent
 PACKAGE_DIR = APP_DIR.parent
 ROOT_DIR = PACKAGE_DIR.parent
 SITE_DIR = PACKAGE_DIR / "site"
-HOST = "127.0.0.1"
-PORT = 8000
+HOST = os.getenv("HOST", "127.0.0.1")
+PORT = int(os.getenv("PORT", "8000"))
 
 sys.path.append(str(ROOT_DIR))
 from aicoveragedata.agent.core.agent import answer_question

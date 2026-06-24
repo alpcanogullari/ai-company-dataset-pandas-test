@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: ai-coverage-dashboard
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: HOST=0.0.0.0 python -m aicoveragedata.app.dashboard_server
+    envVars:
+      - key: OPENAI_MODEL
+        value: gpt-5.5
+      - key: OPENAI_REASONING_EFFORT
+        value: low
+      - key: OPENAI_TEXT_VERBOSITY
+        value: low
+      - key: AGENT_USE_DSPY
+        value: "true"
+      - key: AGENT_DSPY_FALLBACK
+        value: "true"
