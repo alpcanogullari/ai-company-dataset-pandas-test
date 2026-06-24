@@ -751,7 +751,7 @@ def write_profiles_page(
     </div>
     {agent_widget_markup()}
     <script>
-        {agent_widget_script()}
+        {agent_widget_script(os.getenv("AGENT_API_BASE", ""))}
         const profiles = {{
             industry: {json.dumps(industry_profiles)},
             country: {json.dumps(country_profiles)}
@@ -1577,7 +1577,7 @@ def main():
     </div>
     {agent_widget_markup()}
     <script>
-        {agent_widget_script()}
+        {agent_widget_script(os.getenv("AGENT_API_BASE", ""))}
         document.querySelectorAll(".dashboard-tab").forEach((button) => {{
             button.addEventListener("click", () => {{
                 document.querySelectorAll(".dashboard-tab").forEach((item) => item.classList.remove("active"));

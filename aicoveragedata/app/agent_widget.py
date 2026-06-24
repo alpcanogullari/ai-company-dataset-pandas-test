@@ -1,3 +1,6 @@
+import json
+
+
 def agent_widget_styles():
     return """
         .agent-tab {
@@ -318,8 +321,8 @@ def agent_widget_markup():
     """
 
 
-def agent_widget_script():
-    return """
+def agent_widget_script(api_base=""):
+    script = """
         function setupAgentWidget() {
             const tab = document.getElementById("agent-tab");
             const panel = document.getElementById("agent-panel");
@@ -337,6 +340,9 @@ def agent_widget_script():
             }
 
             const storageKey = "ai_coverage_agent_session_id";
+            const configuredAgentApiBase = window.AI_AGENT_API_BASE || __AGENT_API_BASE__;
+            const agentApiBase = String(configuredAgentApiBase || "").replace(/\\/$/, "");
+            const agentEndpoint = `${agentApiBase}/api/agent`;
             let sessionId = localStorage.getItem(storageKey);
             if (!sessionId) {
                 sessionId = `dashboard-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
@@ -416,7 +422,7 @@ def agent_widget_script():
             async function loadStoredHistory() {
                 loadLocalHistory();
                 try {
-                    const response = await fetch("/api/agent", {
+                    const response = await fetch(agentEndpoint, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ session_id: sessionId, history: true })
@@ -548,7 +554,7 @@ def agent_widget_script():
                 renderHistoryMenu();
                 appendMessage("", "Ready. Ask about the dataset, regression, XGBoost, countries, or industries.", false);
                 try {
-                    await fetch("/api/agent", {
+                    await fetch(agentEndpoint, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ session_id: sessionId, reset: true })
@@ -590,7 +596,7 @@ def agent_widget_script():
                 const progressTimer = startProgress(status);
 
                 try {
-                    const response = await fetch("/api/agent", {
+                    const response = await fetch(agentEndpoint, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ session_id: sessionId, question })
@@ -616,3 +622,4 @@ def agent_widget_script():
             resizeInput();
         }
     """
+    return script.replace("__AGENT_API_BASE__", json.dumps(api_base.rstrip("/")))

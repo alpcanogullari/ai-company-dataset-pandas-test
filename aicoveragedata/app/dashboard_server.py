@@ -10,6 +10,7 @@ ROOT_DIR = PACKAGE_DIR.parent
 SITE_DIR = PACKAGE_DIR / "site"
 HOST = os.getenv("HOST", "127.0.0.1")
 PORT = int(os.getenv("PORT", "8000"))
+ALLOWED_ORIGINS = os.getenv("AGENT_ALLOWED_ORIGINS", "*")
 
 sys.path.append(str(ROOT_DIR))
 from aicoveragedata.agent.core.agent import answer_question
@@ -29,6 +30,9 @@ class DashboardRequestHandler(SimpleHTTPRequestHandler):
         return super().do_HEAD()
 
     def do_GET(self):
+        if self.path.split("?", 1)[0] == "/health":
+            self.send_json({"status": "ok"})
+            return
         if self.path == "/":
             self.path = "/index.html"
         if self.path == "/favicon.ico":
@@ -37,10 +41,26 @@ class DashboardRequestHandler(SimpleHTTPRequestHandler):
             return
         return super().do_GET()
 
+    def do_OPTIONS(self):
+        if self.path.split("?", 1)[0] != "/api/agent":
+            self.send_error(404, "Unknown API route")
+            return
+        self.send_response(204)
+        self.send_cors_headers()
+        self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.end_headers()
+
+    def send_cors_headers(self):
+        if ALLOWED_ORIGINS:
+            self.send_header("Access-Control-Allow-Origin", ALLOWED_ORIGINS)
+            self.send_header("Vary", "Origin")
+
     def send_json(self, payload, status=200):
         body = json.dumps(payload).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json")
+        self.send_cors_headers()
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body)

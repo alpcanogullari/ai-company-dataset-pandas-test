@@ -195,6 +195,38 @@ AGENT_USE_DSPY=true
 AGENT_DSPY_FALLBACK=true
 ```
 
+## Deploy With AI Agent
+
+Netlify can serve the static dashboard, but it cannot run `dashboard_server.py`.
+
+Use Render for the Python server:
+
+```text
+Service type: Web Service
+Build command: pip install -r requirements.txt && python -m aicoveragedata.app.dashboard
+Start command: HOST=0.0.0.0 python -m aicoveragedata.app.dashboard_server
+```
+
+Required Render secret:
+
+```text
+OPENAI_API_KEY=...
+```
+
+The included `render.yaml` sets the other agent variables.
+
+Two deploy options:
+
+```text
+Option A: Use the Render URL as the live site.
+Example: https://ai-coverage-dashboard.onrender.com/
+```
+
+```text
+Option B: Keep Netlify for the static site and point the widget to Render.
+Example: set AGENT_API_BASE=https://ai-coverage-dashboard.onrender.com before regenerating index.html.
+```
+
 ## Generated Site
 
 Generated HTML:

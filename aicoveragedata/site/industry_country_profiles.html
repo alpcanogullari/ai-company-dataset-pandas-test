@@ -736,6 +736,9 @@
             }
 
             const storageKey = "ai_coverage_agent_session_id";
+            const configuredAgentApiBase = window.AI_AGENT_API_BASE || "";
+            const agentApiBase = String(configuredAgentApiBase || "").replace(/\/$/, "");
+            const agentEndpoint = `${agentApiBase}/api/agent`;
             let sessionId = localStorage.getItem(storageKey);
             if (!sessionId) {
                 sessionId = `dashboard-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
@@ -815,7 +818,7 @@
             async function loadStoredHistory() {
                 loadLocalHistory();
                 try {
-                    const response = await fetch("/api/agent", {
+                    const response = await fetch(agentEndpoint, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ session_id: sessionId, history: true })
@@ -947,7 +950,7 @@
                 renderHistoryMenu();
                 appendMessage("", "Ready. Ask about the dataset, regression, XGBoost, countries, or industries.", false);
                 try {
-                    await fetch("/api/agent", {
+                    await fetch(agentEndpoint, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ session_id: sessionId, reset: true })
@@ -989,7 +992,7 @@
                 const progressTimer = startProgress(status);
 
                 try {
-                    const response = await fetch("/api/agent", {
+                    const response = await fetch(agentEndpoint, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ session_id: sessionId, question })
