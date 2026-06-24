@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.venv/
+aicoveragedata/agent/.env
+aicoveragedata/agent/state/
+
+# Generated site data and plots
+aicoveragedata/graphs/*.html
+aicoveragedata/site/downloads/**/*.csv
+aicoveragedata/site/downloads/**/*.png
+aicoveragedata/site/*.png
+aicoveragedata/regression/*.png
+
+# User-uploaded local datasets
+aicoveragedata/insert_csv/*.csv
+!aicoveragedata/insert_csv/.gitkeep
