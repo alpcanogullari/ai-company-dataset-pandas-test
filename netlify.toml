@@ -1,3 +1,7 @@
 [build]
   publish = "aicoveragedata/site"
   command = ""
+  functions = "netlify/functions"
+
+[functions]
+  included_files = ["aicoveragedata/site/agent_context.md", "README.md"]

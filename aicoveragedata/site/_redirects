@@ -1,1 +1,2 @@
+/api/agent /.netlify/functions/agent 200
 /dashboard.html /index.html 301

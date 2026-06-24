@@ -419,6 +419,16 @@ def agent_widget_script(api_base=""):
                 renderHistoryMenu();
             }
 
+            function recentClientMessages() {
+                return getLocalMessages()
+                    .filter((item) => item && item.content)
+                    .slice(-12)
+                    .map((item) => ({
+                        role: item.role === "user" ? "user" : "assistant",
+                        content: String(item.content || "").slice(0, 2000)
+                    }));
+            }
+
             async function loadStoredHistory() {
                 loadLocalHistory();
                 try {
@@ -599,7 +609,11 @@ def agent_widget_script(api_base=""):
                     const response = await fetch(agentEndpoint, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ session_id: sessionId, question })
+                        body: JSON.stringify({
+                            session_id: sessionId,
+                            question,
+                            client_messages: recentClientMessages()
+                        })
                     });
                     const payload = await response.json();
                     stopProgress(status, progressTimer);

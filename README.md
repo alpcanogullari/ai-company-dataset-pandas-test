@@ -48,8 +48,9 @@ Generated outputs live inside `site/`.
 | File | What it does |
 | --- | --- |
 | `aicoveragedata/app/dashboard.py` | Main site generator. Builds dashboard, profile pages, and regression report. |
-| `aicoveragedata/app/dashboard_server.py` | Local HTTP server. Serves `site/` and exposes `/api/agent`. |
+| `aicoveragedata/app/dashboard_server.py` | Local HTTP server for development. Serves `site/` and exposes local `/api/agent`. |
 | `aicoveragedata/app/agent_widget.py` | Floating chatbot tab, chat UI, history, clear button, and frontend API calls. |
+| `netlify/functions/agent.mjs` | Deployed Netlify AI agent endpoint for `/api/agent`. |
 | `aicoveragedata/data/dataset.py` | Single shared dataset loader. Reads local CSV first, Kaggle fallback second. |
 | `aicoveragedata/data/coverage.py` | Dataset coverage summary script. |
 | `aicoveragedata/charts/pages/adoption_comparison.py` | Combined country/industry adoption comparison page generator. |
@@ -165,10 +166,15 @@ POST /api/agent
 Agent flow:
 
 ```text
+Netlify deploy:
+agent_widget.py
+-> netlify/functions/agent.mjs
+-> OpenAI Responses API
+-> aicoveragedata/site/agent_context.md
+
+Local Python dev:
 dashboard_server.py
 -> agent/core/agent.py
--> agent/context/tools.py
--> agent/llm/dspy_agent.py
 -> local dataset/regression/code context
 ```
 
@@ -195,37 +201,38 @@ AGENT_USE_DSPY=true
 AGENT_DSPY_FALLBACK=true
 ```
 
-## Deploy With AI Agent
+## Deploy On Netlify With AI Agent
 
-Netlify can serve the static dashboard, but it cannot run `dashboard_server.py`.
+Netlify serves the static dashboard and runs the AI agent through a Netlify Function.
 
-Use Render for the Python server:
+The deployed API route is:
 
 ```text
-Service type: Web Service
-Build command: pip install -r requirements.txt && python -m aicoveragedata.app.dashboard
-Start command: HOST=0.0.0.0 python -m aicoveragedata.app.dashboard_server
+/api/agent
 ```
 
-Required Render secret:
+Required Netlify environment variable:
 
 ```text
 OPENAI_API_KEY=...
 ```
 
-The included `render.yaml` sets the other agent variables.
-
-Two deploy options:
+Optional Netlify environment variable:
 
 ```text
-Option A: Use the Render URL as the live site.
-Example: https://ai-coverage-dashboard.onrender.com/
+OPENAI_MODEL=gpt-5.2
 ```
 
+Netlify settings:
+
 ```text
-Option B: Keep Netlify for the static site and point the widget to Render.
-Example: set AGENT_API_BASE=https://ai-coverage-dashboard.onrender.com before regenerating index.html.
+Publish directory: aicoveragedata/site
+Functions directory: netlify/functions
+Build command: empty
 ```
+
+The function uses `aicoveragedata/site/agent_context.md` as compact deployment context.
+The local Python `dashboard_server.py` is only needed for local development.
 
 ## Generated Site
 
