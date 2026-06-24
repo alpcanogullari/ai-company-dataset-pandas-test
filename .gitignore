@@ -2,6 +2,7 @@ __pycache__/
 *.py[cod]
 .DS_Store
 .venv/
+pandas-ai-adoption-analysis/
 aicoveragedata/agent/.env
 aicoveragedata/agent/state/
 
