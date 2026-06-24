@@ -16,3 +16,6 @@ aicoveragedata/regression/*.png
 # User-uploaded local datasets
 aicoveragedata/insert_csv/*.csv
 !aicoveragedata/insert_csv/.gitkeep
+
+# Local Netlify folder
+.netlify
