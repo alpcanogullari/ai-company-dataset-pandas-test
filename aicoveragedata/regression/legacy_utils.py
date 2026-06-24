@@ -340,7 +340,7 @@ def write_regression_page(output_path=REGRESSION_PAGE):
         <h1>Regression Analysis</h1>
         <p>Predicts <code>{html.escape(response["metrics"]["Target"])}</code> from AI adoption drivers.</p>
         <div class="top-links">
-            <a href="dashboard.html">Dashboard</a>
+            <a href="index.html">Dashboard</a>
             <a href="industry_country_profiles.html">Industry and Country Profiles</a>
         </div>
     </header>

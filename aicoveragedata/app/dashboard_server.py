@@ -30,7 +30,7 @@ class DashboardRequestHandler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == "/":
-            self.path = "/dashboard.html"
+            self.path = "/index.html"
         if self.path == "/favicon.ico":
             self.send_response(204)
             self.end_headers()
@@ -99,7 +99,7 @@ class DashboardRequestHandler(SimpleHTTPRequestHandler):
 
 
 def main():
-    print(f"Dashboard server running at http://{HOST}:{PORT}/dashboard.html")
+    print(f"Dashboard server running at http://{HOST}:{PORT}/")
     print(f"Project root: {ROOT_DIR}")
     print(f"Serving: {SITE_DIR}")
     ThreadingHTTPServer((HOST, PORT), DashboardRequestHandler).serve_forever()

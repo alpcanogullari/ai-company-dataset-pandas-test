@@ -1,9 +1,3 @@
 [build]
   publish = "aicoveragedata/site"
   command = ""
-
-[[redirects]]
-  from = "/"
-  to = "/dashboard.html"
-  status = 200
-

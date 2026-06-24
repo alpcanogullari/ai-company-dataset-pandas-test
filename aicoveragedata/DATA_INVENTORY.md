@@ -149,7 +149,7 @@ training_group, invest_group
 ### HTML
 
 ```text
-site/dashboard.html
+site/index.html
 site/industry_country_profiles.html
 site/regression_analysis.html
 site/country_adoption_rate.html

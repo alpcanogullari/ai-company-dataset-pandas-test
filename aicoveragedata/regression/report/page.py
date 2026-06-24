@@ -562,7 +562,7 @@ def write_page():
             <div class="formula">{formula}</div>
         </section>
         <div class="toolbar">
-            <a href="dashboard.html">Back to Dashboard</a>
+            <a href="index.html">Back to Dashboard</a>
             <button class="active" data-sheet="stats">Training vs Test Stats</button>
             <button data-sheet="pipeline-audit">Pipeline Audit</button>
             <button data-sheet="skew-transform">Skew Transform</button>

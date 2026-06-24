@@ -29,7 +29,7 @@ from aicoveragedata.app.agent_widget import (
 from aicoveragedata.regression.build_report import write_page as write_regression_page
 
 
-OUTPUT_FILE = SITE_DIR / "dashboard.html"
+OUTPUT_FILE = SITE_DIR / "index.html"
 PROFILE_OUTPUT_FILE = SITE_DIR / "industry_country_profiles.html"
 DOWNLOAD_DIR = SITE_DIR / "downloads" / "dashboard"
 
@@ -679,7 +679,7 @@ def write_profiles_page(
 <body>
     <header>
         <h1>Industry and Country AI Profiles</h1>
-        <a href="dashboard.html">Back to dashboard</a>
+        <a href="index.html">Back to dashboard</a>
     </header>
     <div class="page">
         <section class="fixed-score-panel">

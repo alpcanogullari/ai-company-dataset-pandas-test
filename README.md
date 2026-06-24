@@ -25,7 +25,7 @@ Serve locally:
 Open:
 
 ```text
-http://127.0.0.1:8000/dashboard.html
+http://127.0.0.1:8000/
 ```
 
 ## Mental Map
@@ -200,7 +200,7 @@ AGENT_DSPY_FALLBACK=true
 Generated HTML:
 
 ```text
-aicoveragedata/site/dashboard.html
+aicoveragedata/site/index.html
 aicoveragedata/site/industry_country_profiles.html
 aicoveragedata/site/regression_analysis.html
 ```
