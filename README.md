@@ -194,7 +194,7 @@ Example:
 
 ```text
 OPENAI_API_KEY=...
-OPENAI_MODEL=gpt-5.5
+OPENAI_MODEL=your_openai_model
 OPENAI_REASONING_EFFORT=low
 OPENAI_TEXT_VERBOSITY=low
 AGENT_USE_DSPY=true
@@ -220,7 +220,7 @@ OPENAI_API_KEY=...
 Optional Netlify environment variable:
 
 ```text
-OPENAI_MODEL=gpt-5.2
+OPENAI_MODEL=your_openai_model
 ```
 
 Netlify settings:

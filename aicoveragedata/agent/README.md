@@ -14,7 +14,7 @@ Edit the placeholder key file:
 
 ```bash
 OPENAI_API_KEY=your_real_key_here
-OPENAI_MODEL=gpt-5.5
+OPENAI_MODEL=your_openai_model
 OPENAI_REASONING_EFFORT=low
 OPENAI_TEXT_VERBOSITY=low
 AGENT_USE_DSPY=true

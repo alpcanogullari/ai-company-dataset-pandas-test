@@ -9,7 +9,7 @@ services:
       - key: OPENAI_API_KEY
         sync: false
       - key: OPENAI_MODEL
-        value: gpt-5.5
+        sync: false
       - key: OPENAI_REASONING_EFFORT
         value: low
       - key: OPENAI_TEXT_VERBOSITY

@@ -6,6 +6,7 @@ from pathlib import Path
 AGENT_DIR = Path(__file__).resolve().parents[1]
 ENV_FILE = AGENT_DIR / ".env"
 STATE_DIR = AGENT_DIR / "state"
+DEFAULT_OPENAI_MODEL = "gpt-5.2"
 
 
 def load_env_file(path=ENV_FILE):
@@ -45,7 +46,7 @@ class AgentConfig:
         load_env_file()
         return cls(
             api_key=os.getenv("OPENAI_API_KEY"),
-            model=os.getenv("OPENAI_MODEL", "gpt-5.5"),
+            model=os.getenv("OPENAI_MODEL", DEFAULT_OPENAI_MODEL),
             reasoning_effort=os.getenv("OPENAI_REASONING_EFFORT", "low"),
             text_verbosity=os.getenv("OPENAI_TEXT_VERBOSITY", "low"),
             use_dspy=env_bool("AGENT_USE_DSPY", True),
